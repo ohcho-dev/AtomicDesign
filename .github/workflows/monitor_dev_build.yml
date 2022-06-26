@@ -9,9 +9,6 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
       - uses: actions/setup-node@v1
         with:
           node-version: 16
