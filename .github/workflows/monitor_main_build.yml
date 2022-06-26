@@ -1,8 +1,8 @@
-name: Monitor - b/Master a/Build
+name: Monitor - b/Main a/Build
 
 on:
   push:
-    branches: [Master]
+    branches: [Main]
 
 jobs:
   build:
