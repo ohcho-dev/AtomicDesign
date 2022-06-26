@@ -1,0 +1,34 @@
+name: Monitor - b/Main a/Build
+
+on:
+  push:
+    branches: [Main]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16
+      - run: npm install
+      - run: npm run build
+      - name: Send mail
+        if: failure()
+        uses: dawidd6/action-send-mail@v2
+        with:
+          # mail server settings
+          server_address: smtp.gmail.com
+          server_port: 465
+          # user credentials
+          username: ${{ secrets.ALERT_EMAIL_USERNAME }}
+          password: ${{ secrets.ALERT_EMAIL_PASSWORD }}
+          # email subject
+          subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
+          # email body as text
+          body: ${{ github.job }} job in worflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}
+          # comma-separated string, send email to
+          to: ohcho.dev@gmail.com
+          # from email name
+          from: gitflow.alert.problem@gmail.com
